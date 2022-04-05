@@ -7,7 +7,7 @@ const usePOST = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(null);
 
-  const fetchPost = (url, dataToServer) => {
+  const fetchPost = (url, data) => {
     setIsError(null);
     setIsLoading(true);
 
@@ -17,13 +17,11 @@ const usePOST = () => {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then(async (response) => {
-        if (response.status === 201) {
-          const data = await response.json();
-          return data.data;
+      .then((response) => {
+        if (response.status === 200) {
+          return response.data;
         } else if (response.status === 406) {
-          let err = await response.json();
-          throw new Error(`${err.message}`);
+          throw new Error(`${response.message}`);
         } else {
           throw new Error('Unknown Error, update page and try again!');
         }
