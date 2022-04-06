@@ -10,4 +10,6 @@ const uploadSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+uploadSchema.index({ createdAt: 1 }, { expireAfterSeconds: 600 });
+
 module.exports = mongoose.model('upload', uploadSchema);

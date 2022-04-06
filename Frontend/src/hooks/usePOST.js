@@ -16,20 +16,17 @@ const usePOST = () => {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        validateStatus: () => true,
       })
       .then((response) => {
-        if (response.status === 200) {
-          return response.data;
+        if (response.status === 201) {
+          setIsLoading(false);
+          return setData(response.data.data);
         } else if (response.status === 406) {
-          throw new Error(`${response.message}`);
+          throw new Error(`${response.data.message}`);
         } else {
           throw new Error('Unknown Error, update page and try again!');
         }
-      })
-      .then((response) => {
-        setData(response.data);
-        setIsLoading(false);
-        setIsError(null);
       })
       .catch((err) => {
         setIsLoading(false);

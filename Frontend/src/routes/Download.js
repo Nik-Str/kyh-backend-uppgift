@@ -3,19 +3,21 @@ import { InputText } from 'primereact/inputtext';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Button } from 'primereact/button';
 //React
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 //Hooks
-import usePOST from '../hooks/usePOST';
+import useGET from '../hooks/useGET';
 
 const Download = () => {
-  const { data, isLoading, isError, fetchPost } = usePOST();
+  const { data, isLoading, isError, fetchGET } = useGET();
   const [value, setValue] = useState('');
+
+  useEffect(() => {
+    setValue('');
+  }, [data]);
 
   const handleDownload = (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append('file', value);
-    fetchPost('http://localhost:8080/download', formData);
+    fetchGET(`http://localhost:8080/download/${value}`, value);
   };
 
   return (
@@ -24,7 +26,7 @@ const Download = () => {
         <h1 className="text-center">Download Files</h1>
         <div className="flex justify-content-center pb-4">
           <div>
-            {!data && !isLoading && !isError && (
+            {!isLoading && !isError && (
               <form onSubmit={(e) => handleDownload(e)}>
                 <InputText placeholder="Enter download link" value={value} onChange={(e) => setValue(e.target.value)} />
                 <Button type="submit">Download</Button>
@@ -39,8 +41,8 @@ const Download = () => {
                 />
               </Button>
             )}
-            {isError && <p className="text-pink-500 font-bold">{isError}</p>}
-            {data && <p className="text-green-300 font-bold">{data}</p>}
+            {isError && <p className="text-pink-500 font-bold text-center">{isError}</p>}
+            {data && <p className="text-green-300 font-bold text-center">{data}</p>}
           </div>
         </div>
       </div>

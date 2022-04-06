@@ -39,7 +39,12 @@ const links = [
   },
 ];
 
-const start = <div className="ml-1 text-xl font-bold">Easy Sharing</div>;
+const start = (
+  <div className="flex align-items-center">
+    <i className="pi pi-box ml-2" style={{ fontSize: '2em', color: 'var(--primary-color)' }}></i>
+    <div className="ml-2 text-xl font-bold">Easy Sharing</div>
+  </div>
+);
 
 const Navbar = () => {
   return (

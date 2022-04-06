@@ -22,13 +22,16 @@ const Upload = () => {
         <div className="flex justify-content-center pb-4">
           <div>
             {!data && !isLoading && !isError && (
-              <FileUpload
-                mode="basic"
-                chooseLabel="Add a file"
-                auto={true}
-                uploadHandler={(e) => handleUpload(e)}
-                customUpload={true}
-              />
+              <>
+                <FileUpload
+                  mode="basic"
+                  chooseLabel="Add a file"
+                  auto={true}
+                  uploadHandler={(e) => handleUpload(e)}
+                  customUpload={true}
+                />
+                <p className="text-sm">(Max filesize is 5mb)</p>
+              </>
             )}
             {isLoading && (
               <Button className="p-button-outlined" type="submit">

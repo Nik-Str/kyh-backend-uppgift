@@ -55,3 +55,11 @@ db.on('disconnected', () => {
 //Upload
 const upload = require('./controllers/upload');
 app.post('/upload', upload);
+
+//Download
+const download = require('./controllers/download');
+app.get('/download/:id', download);
+
+//-------------------------Service----------------------------
+const remove = require('./service/remove');
+remove();
