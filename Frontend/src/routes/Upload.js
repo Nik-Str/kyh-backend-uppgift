@@ -9,9 +9,10 @@ const Upload = () => {
   const { data, isLoading, isError, fetchPost } = usePOST();
 
   const handleUpload = (event) => {
-    const videoFile = event.files[0];
     const formData = new FormData();
-    formData.append('file', videoFile);
+    event.files.forEach((file, index) => {
+      formData.append(`file${index}`, file);
+    });
     fetchPost('http://localhost:8080/upload', formData);
   };
 
@@ -29,6 +30,7 @@ const Upload = () => {
                   auto={true}
                   uploadHandler={(e) => handleUpload(e)}
                   customUpload={true}
+                  multiple={true}
                 />
                 <p className="text-sm">(Max filesize is 5mb)</p>
               </>

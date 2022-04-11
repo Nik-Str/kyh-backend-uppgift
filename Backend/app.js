@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 8080;
 const cors = require('cors');
 const app = express();
-const path = require('path');
 
 //Cors config
 const corsOption = {
@@ -27,8 +26,7 @@ app.listen(port, () => {
   console.log(`=> Sever is listening on port ${port}`);
 });
 
-//DB connection
-
+//-------------------------DB connection-------------------------
 const connectToDb = () => {
   mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
@@ -41,7 +39,7 @@ const db = mongoose.connection;
 
 db.on('error', (error) => {
   console.error('=> DB error: ' + error);
-  mongoose.disconnect(); // Trigger disconnect on any error
+  mongoose.disconnect();
 });
 
 db.on('connected', () => console.log('=> DB connected'));
@@ -60,6 +58,6 @@ app.post('/upload', upload);
 const download = require('./controllers/download');
 app.get('/download/:id', download);
 
-//-------------------------Service----------------------------
-const remove = require('./service/remove');
-remove();
+//Delete
+const remove = require('./controllers/remove');
+app.delete('/remove', remove);

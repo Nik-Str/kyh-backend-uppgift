@@ -29,7 +29,9 @@ const Download = () => {
             {!isLoading && !isError && (
               <form onSubmit={(e) => handleDownload(e)}>
                 <InputText placeholder="Enter download link" value={value} onChange={(e) => setValue(e.target.value)} />
-                <Button type="submit">Download</Button>
+                <Button type="submit" disabled={value === '' ? true : false}>
+                  Download
+                </Button>
               </form>
             )}
             {isLoading && (

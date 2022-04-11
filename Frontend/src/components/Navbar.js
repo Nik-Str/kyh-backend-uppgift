@@ -9,7 +9,7 @@ const links = [
     template: () => {
       return (
         <Link to="/" className="p-3 no-underline text-white">
-          <i className="pi pi-fw pi-home mr-1"></i>
+          <i className="pi pi-fw pi-home mr-1 my-2"></i>
           Home
         </Link>
       );
@@ -20,7 +20,7 @@ const links = [
     template: () => {
       return (
         <Link to="/upload" className="p-3 no-underline text-white">
-          <i className="pi pi-cloud-upload mr-1"></i>
+          <i className="pi pi-cloud-upload mr-1 my-2"></i>
           Upload
         </Link>
       );
@@ -31,7 +31,7 @@ const links = [
     template: () => {
       return (
         <Link to="/download" className="p-3 no-underline text-white">
-          <i className="pi pi-cloud-download mr-1"></i>
+          <i className="pi pi-cloud-download mr-1 my-2"></i>
           Download
         </Link>
       );
