@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const usePOST = () => {
   //Data, loading and error states
-  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(null);
 
@@ -14,28 +13,25 @@ const usePOST = () => {
     axios
       .post(url, data, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
-        validateStatus: () => true,
       })
       .then((response) => {
         if (response.status === 201) {
           setIsLoading(false);
-          return setData(response.data.data);
-        } else if (response.status === 406) {
-          throw new Error(`${response.data.message}`);
+          return (window.location.href = `${process.env.REACT_APP_CLIENT_URL}`);
         } else {
           throw new Error('Unknown Error, update page and try again!');
         }
       })
       .catch((err) => {
         setIsLoading(false);
-        setIsError(err.message);
+        setIsError(err.response.data.message);
       });
   };
 
-  return { data, isLoading, isError, fetchPost };
+  return { isLoading, isError, fetchPost };
 };
 
 export default usePOST;

@@ -3,12 +3,16 @@ const bucket = require('../connection/googleCloud');
 
 module.exports = async (req, res) => {
   try {
-    const exist = await Upload.findOne({ fileName: req.params.id });
+    if (req.session.loggedIn) {
+      const exist = await Upload.findOne({ fileName: req.params.id });
 
-    if (exist) {
-      await bucket.file(`${req.params.id}.zip`).createReadStream().pipe(res);
+      if (exist) {
+        await bucket.file(`${req.params.id}.zip`).createReadStream().pipe(res);
+      } else {
+        res.status(404).json({ message: 'File does not exist!' });
+      }
     } else {
-      res.status(404).json({ message: 'File does not exist!' });
+      res.status(401).end();
     }
   } catch (err) {
     console.log(err);

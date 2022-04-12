@@ -11,6 +11,9 @@ import App from './App';
 import Home from './routes/Home';
 import Download from './routes/Download';
 import Upload from './routes/Upload';
+import Login from './routes/Login';
+import Signup from './routes/Signup';
+import Profile from './routes/Profile';
 import NotFound from './routes/NotFound';
 
 const container = document.getElementById('root');
@@ -27,6 +30,9 @@ root.render(
           <Route path="/" element={<Home />} />
           <Route path="upload" element={<Upload />} />
           <Route path="download" element={<Download />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
           {/* The "*" has special meaning here. It will match only when no other routes do. */}
           <Route path="*" element={<NotFound />} />
         </Route>

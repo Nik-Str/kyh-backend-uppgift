@@ -42,3 +42,13 @@ a:hover {
   padding-left: 5%;
   padding-right: 5%;
 }
+
+.tableContainer {
+  width: 50vw !important;
+}
+
+@media only screen and (max-width: 992px) {
+  .tableContainer {
+    width: auto !important;
+  }
+}

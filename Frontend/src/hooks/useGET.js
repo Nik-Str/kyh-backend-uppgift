@@ -41,7 +41,6 @@ const usePOST = () => {
                 const error = JSON.parse(e.target.result);
                 resolve(error.message);
               };
-
               fr.readAsText(response.data);
             });
           };

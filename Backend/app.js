@@ -5,14 +5,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
 const port = process.env.PORT || 8080;
 const cors = require('cors');
 const app = express();
 
 //Cors config
 const corsOption = {
-  origin: '*',
+  origin: 'http://localhost:3000',
   optionsSuccessStatus: 200,
+  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
+  credentials: true,
 };
 
 //App.use
@@ -20,6 +23,13 @@ app.use(cors(corsOption));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
+app.use(
+  cookieSession({
+    name: 'EasyUpload',
+    secret: process.env.SESSION_SECRET,
+    maxAge: 24 * 60 * 60 * 1000,
+  })
+);
 
 //App.listening
 app.listen(port, () => {
@@ -60,4 +70,21 @@ app.get('/download/:id', download);
 
 //Delete
 const remove = require('./controllers/remove');
-app.delete('/remove', remove);
+app.post('/remove', remove);
+
+//Logout
+const logout = require('./controllers/logout');
+app.get('/logout', logout);
+
+//Login
+const login = require('./controllers/login');
+app.post('/login', login);
+
+const signup = require('./controllers/signup');
+app.post('/signup', signup);
+
+const isLoggedIn = require('./controllers/isLoggedIn');
+app.get('/isLoggedIn', isLoggedIn);
+
+const status = require('./controllers/status');
+app.get('/status', status);

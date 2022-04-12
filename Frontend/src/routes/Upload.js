@@ -13,12 +13,12 @@ const Upload = () => {
     event.files.forEach((file, index) => {
       formData.append(`file${index}`, file);
     });
-    fetchPost('http://localhost:8080/upload', formData);
+    fetchPost(`${process.env.REACT_APP_SEVER_URL}/upload`, formData);
   };
 
   return (
     <div className="container">
-      <div className="w-full md:w-30rem shadow-4 border-round surface-card">
+      <div className="w-full md:w-30rem shadow-4 border-round surface-card p-3">
         <h1 className="text-center">Upload Files</h1>
         <div className="flex justify-content-center pb-4">
           <div>

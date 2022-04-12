@@ -17,21 +17,24 @@ const Download = () => {
 
   const handleDownload = (event) => {
     event.preventDefault();
-    fetchGET(`http://localhost:8080/download/${value}`, value);
+    fetchGET(`${process.env.REACT_APP_SEVER_URL}/download/${value}`, value);
   };
 
   return (
     <div className="container">
-      <div className="w-full md:w-30rem shadow-4 border-round surface-card">
+      <div className="w-full md:w-30rem shadow-4 border-round surface-card p-5">
         <h1 className="text-center">Download Files</h1>
         <div className="flex justify-content-center pb-4">
           <div>
             {!isLoading && !isError && (
               <form onSubmit={(e) => handleDownload(e)}>
-                <InputText placeholder="Enter download link" value={value} onChange={(e) => setValue(e.target.value)} />
-                <Button type="submit" disabled={value === '' ? true : false}>
-                  Download
-                </Button>
+                <InputText
+                  placeholder="Enter download link"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  required
+                />
+                <Button type="submit">Download</Button>
               </form>
             )}
             {isLoading && (
