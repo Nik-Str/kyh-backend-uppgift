@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    subscription: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );

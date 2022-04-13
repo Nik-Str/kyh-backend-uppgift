@@ -14,6 +14,10 @@ const usePOST = () => {
     axios
       .get(url, {
         responseType: 'blob',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
         validateStatus: () => true,
       })
       .then(async (response) => {

@@ -1,20 +1,20 @@
 //primeReact
 import { Chart } from 'primereact/chart';
 
-const ChartComp = ({ memory }) => {
+const ChartComp = ({ memory, subscription }) => {
   const total = Math.round(memory * 100) / 100;
-  const rest = 5 - total;
+  const rest = subscription - total;
 
   const data = {
     labels: ['MB'],
     datasets: [
       {
-        label: 'Used memory',
+        label: 'Used memory mb',
         backgroundColor: '#125386',
         data: [total],
       },
       {
-        label: 'Free memory',
+        label: 'Free memory mb',
         backgroundColor: '#212121',
         data: [rest],
       },

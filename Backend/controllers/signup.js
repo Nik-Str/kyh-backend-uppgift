@@ -13,6 +13,7 @@ module.exports = async (req, res) => {
         email: req.body.email,
         password: hash,
         memory: 0,
+        subscription: req.body.subscription,
       });
       const user = await newUser.save();
 

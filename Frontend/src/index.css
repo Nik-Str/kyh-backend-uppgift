@@ -19,9 +19,22 @@ header {
 }
 
 /* Navlinks */
+.p-menubar ul {
+  padding-right: 2rem !important;
+}
+
+.p-menubar-start {
+  padding-left: 2rem !important;
+}
+
 a {
   transition: 0.8s;
 }
+
+a[role='menuitem'] {
+  display: none !important;
+}
+
 a:hover {
   color: grey !important;
 }
@@ -50,5 +63,15 @@ a:hover {
 @media only screen and (max-width: 992px) {
   .tableContainer {
     width: auto !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .p-menubar ul {
+    padding-right: 0rem !important;
+  }
+
+  .p-menubar-start {
+    padding-left: 0rem !important;
   }
 }

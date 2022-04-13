@@ -5,6 +5,16 @@ import { Menubar } from 'primereact/menubar';
 
 const Navbar = ({ loggedIn }) => {
   const links = [
+    {
+      label: 'Download',
+      template: () => {
+        return (
+          <Link to="/download" className="p-3 no-underline text-white">
+            Download
+          </Link>
+        );
+      },
+    },
     loggedIn
       ? {
           label: 'Upload',
@@ -26,13 +36,14 @@ const Navbar = ({ loggedIn }) => {
             );
           },
         },
+
     loggedIn
       ? {
-          label: 'Download',
+          label: 'Profile',
           template: () => {
             return (
-              <Link to="/download" className="p-3 no-underline text-white">
-                Download
+              <Link to="/profile" className="p-3 no-underline text-white">
+                Profile
               </Link>
             );
           },
@@ -48,16 +59,6 @@ const Navbar = ({ loggedIn }) => {
           },
         },
     loggedIn && {
-      label: 'Profile',
-      template: () => {
-        return (
-          <Link to="/profile" className="p-3 no-underline text-white">
-            Profile
-          </Link>
-        );
-      },
-    },
-    loggedIn && {
       label: 'log out',
       template: () => {
         return (
@@ -71,7 +72,7 @@ const Navbar = ({ loggedIn }) => {
 
   const start = (
     <div className="flex align-items-center">
-      <Link to="/" className="p-3 no-underline text-white flex align-items-center">
+      <Link to="/" className="no-underline text-white flex align-items-center">
         <i className="pi pi-box ml-2" style={{ fontSize: '2em', color: 'var(--primary-color)' }}></i>
         <div className="ml-2 text-xl font-bold">Easy Sharing</div>
       </Link>

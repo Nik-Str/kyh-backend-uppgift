@@ -20,7 +20,7 @@ const usePOST = () => {
       .then((response) => {
         if (response.status === 201) {
           setIsLoading(false);
-          return (window.location.href = `${process.env.REACT_APP_CLIENT_URL}`);
+          return (window.location.href = `${process.env.REACT_APP_CLIENT_URL}/profile`);
         } else {
           throw new Error('Unknown Error, update page and try again!');
         }

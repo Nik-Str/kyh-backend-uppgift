@@ -85,18 +85,27 @@ const Profile = () => {
     );
   };
 
+  const getFile = (rowData) => {
+    return (
+      <a href={`${process.env.REACT_APP_SEVER_URL}/download/${rowData.fileName}`} className="text-white no-underline">
+        {rowData.fileName}
+      </a>
+    );
+  };
+
   return (
     <div className="container">
       <div className="shadow-4 border-round surface-card tableContainer p-5">
         <h1 className="text-center">Profile</h1>
         {data && (
           <DataTable value={data.uploads} responsiveLayout="scroll">
-            <Column field="fileName" header="Name"></Column>
-            <Column field="fileSize" header="Size mb" body={round}></Column>
+            <Column field="fileName" header="File" body={getFile}></Column>
+            <Column field="fileSize" header="Size (mb)" body={round}></Column>
+            <Column field="fileDescription" header="Description"></Column>
             <Column header="Remove" body={removeBtn}></Column>
           </DataTable>
         )}
-        {data && <ChartComp memory={data.memory} />}
+        {data && <ChartComp memory={data.user.memory} subscription={data.user.subscription} />}
         {isError && <p className="text-pink-500 font-bold text-center">{isError}</p>}
       </div>
     </div>

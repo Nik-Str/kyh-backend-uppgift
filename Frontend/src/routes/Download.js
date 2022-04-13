@@ -33,8 +33,11 @@ const Download = () => {
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                   required
+                  className="w-16rem"
                 />
-                <Button type="submit">Download</Button>
+                <Button type="submit" disabled={value === '' ? true : false}>
+                  Download
+                </Button>
               </form>
             )}
             {isLoading && (

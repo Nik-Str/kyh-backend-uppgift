@@ -10,6 +10,10 @@ const uploadSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    fileDescription: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: String,
       required: true,

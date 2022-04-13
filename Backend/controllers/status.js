@@ -4,10 +4,10 @@ const Upload = require('../models/upload');
 module.exports = async (req, res) => {
   try {
     const user = await User.findById(req.session.userId);
-    const uploads = await Upload.find({ userId: req.session.userId }, 'fileSize fileName');
+    const uploads = await Upload.find({ userId: req.session.userId }, 'fileSize fileName fileDescription');
 
     if (user) {
-      res.status(200).json({ memory: user.memory, uploads: uploads });
+      res.status(200).json({ user: user, uploads: uploads });
     } else {
       res.status(404).end();
     }

@@ -21,61 +21,59 @@ module.exports = async (req, res) => {
 
         filesToBuffer.push(req.files[key]);
       }
+
       //Convert to mb
       size = size / (1024 * 1024);
 
       const user = await User.findById(req.session.userId);
 
       //Contoll file size
-      if (size < 5) {
-        if (user.memory + size < 5) {
-          //Create unique file name and save in db
-          const uuid = uuidv4();
+      if (user.memory + size < user.subscription) {
+        //Create unique file name and save in db
+        const uuid = uuidv4();
 
-          //if not .zip => Convert files to zip and then save to cloudy
-          if (type || filesToBuffer.length > 1) {
-            const output = bucket.file(`${uuid}.zip`).createWriteStream({
-              resumable: false,
-              gzip: true,
-            });
-
-            const archive = archiver('zip');
-
-            archive.on('error', (err) => {
-              throw err;
-            });
-
-            archive.pipe(output);
-
-            filesToBuffer.forEach((file) => {
-              const buffer = Buffer.from(file.data);
-              archive.append(buffer, { name: `${file.name}` });
-            });
-
-            await archive.finalize();
-          } else {
-            await bucket.file(`${uuid}.zip`).save(req.files.file0.data);
-          }
-
-          //Save new file to db
-          const upload = new Upload({
-            fileName: uuid,
-            fileSize: size,
-            userId: req.session.userId,
+        //if not .zip => Convert files to zip and then save to cloudy
+        if (type || filesToBuffer.length > 1) {
+          const output = bucket.file(`${uuid}.zip`).createWriteStream({
+            resumable: false,
+            gzip: true,
           });
-          await upload.save();
 
-          //Update User memory
-          const newMemory = size + user.memory;
-          await User.findByIdAndUpdate(req.session.userId, { memory: newMemory });
+          const archive = archiver('zip');
 
-          //End response
-          res.status(201).json({ data: uuid });
+          archive.on('error', (err) => {
+            throw err;
+          });
+
+          archive.pipe(output);
+
+          filesToBuffer.forEach((file) => {
+            const buffer = Buffer.from(file.data);
+            archive.append(buffer, { name: `${file.name}` });
+          });
+
+          await archive.finalize();
         } else {
-          res.status(406).json({ message: 'User storage exceed limit of 5mb.' });
+          await bucket.file(`${uuid}.zip`).save(req.files.file0.data);
         }
+
+        //Save new file to db
+        const upload = new Upload({
+          fileName: uuid,
+          fileSize: size,
+          fileDescription: req.body.description,
+          userId: req.session.userId,
+        });
+        await upload.save();
+
+        //Update User memory
+        const newMemory = size + user.memory;
+        await User.findByIdAndUpdate(req.session.userId, { memory: newMemory });
+
+        //End response
+        res.status(201).json({ data: uuid });
       } else {
-        res.status(406).json({ message: 'File size exceed 5mb.' });
+        res.status(406).json({ message: `User storage exceed limit of ${user.subscription}mb.` });
       }
     } else {
       res.status(401).end();
